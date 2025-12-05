@@ -16,14 +16,15 @@
                             50: '#f5f3ff',
                             100: '#ede9fe',
                             400: '#a78bfa',
-                            500: '#8b5cf6', // El violeta principal de la app
+                            500: '#8b5cf6',
                             600: '#7c3aed',
                             900: '#4c1d95',
                         },
                         neon: {
                             blue: '#00f3ff',
                             purple: '#bc13fe',
-                            green: '#0aff0a'
+                            green: '#0aff0a',
+                            pink: '#ff00ff'
                         }
                     },
                     fontFamily: {
@@ -35,7 +36,6 @@
         }
     </script>
     <style>
-        /* EFECTOS NEÓN Y ESTILOS */
         .neon-text-glow {
             text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
         }
@@ -94,31 +94,41 @@
         
         /* Chat Styles */
         .chat-bubble {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
         }
-        .chat-user {
-            background-color: #7c3aed;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-        .chat-bot {
-            background-color: #1f2937;
-            color: #e5e7eb;
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border: 1px solid #374151;
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-user { background-color: #7c3aed; color: white; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2); }
+        .chat-bot { background-color: #1f2937; color: #e5e7eb; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #374151; }
+        .chat-options { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; animation: fadeIn 0.5s ease-out; }
+        .chat-option-btn { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .chat-option-btn:hover { background: rgba(59, 130, 246, 0.2); transform: translateY(-2px); box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
+        .typing-dot { display: inline-block; width: 6px; height: 6px; margin-right: 3px; background-color: #9ca3af; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        /* Pricing Toggle */
+        .pricing-toggle { background: #1f2937; border-radius: 99px; padding: 4px; display: inline-flex; position: relative; }
+        .pricing-toggle button { padding: 8px 16px; border-radius: 99px; font-weight: 600; font-size: 0.85rem; position: relative; z-index: 10; transition: all 0.3s; color: #9ca3af; white-space: nowrap; }
+        .pricing-toggle button.active { color: white; }
+        .pricing-toggle-bg { position: absolute; top: 4px; left: 4px; height: calc(100% - 8px); background: #7c3aed; border-radius: 99px; transition: all 0.3s; width: 32%; }
+        
+        @media (max-width: 640px) {
+            .pricing-toggle { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .pricing-toggle button { font-size: 0.75rem; padding: 6px 12px; }
         }
     </style>
 </head>
 <body class="bg-[#05050A] text-white antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
 
-    <!-- HIDDEN ANALYTICS FORM (Para capturar datos de los demos) -->
+    <!-- HIDDEN ANALYTICS FORM -->
     <form name="demo_analytics" netlify netlify-honeypot="bot-field" hidden>
         <input type="text" name="tool_used" />
         <input type="text" name="user_input_data" />
@@ -137,9 +147,9 @@
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#funciones" class="text-gray-300 hover:text-white hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all text-sm font-medium">Funciones</a>
-                    <a href="#ciencia" class="text-gray-300 hover:text-brand-300 hover:shadow-[0_0_10px_rgba(167,139,250,0.5)] transition-all text-sm font-medium">Ciencia</a>
-                    <a href="#stemi" class="text-gray-300 hover:text-white hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all text-sm font-medium">STEMI Chat</a>
-                    <a href="#lab" class="text-brand-300 hover:text-white hover:shadow-[0_0_10px_rgba(167,139,250,0.5)] transition-all text-sm font-bold flex items-center gap-1"><i data-lucide="flask-conical" class="w-4 h-4"></i> Labs</a>
+                    <a href="#stemi" class="text-brand-300 hover:text-white hover:shadow-[0_0_10px_rgba(167,139,250,0.5)] transition-all text-sm font-bold flex items-center gap-1"><i data-lucide="sparkles" class="w-4 h-4"></i> Conoce a STEMI</a>
+                    <a href="#lab" class="text-gray-300 hover:text-white hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all text-sm font-medium">Labs</a>
+                    <a href="#precios" class="text-gray-300 hover:text-white hover:shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all text-sm font-medium">Precios</a>
                     <button onclick="document.getElementById('registro').scrollIntoView({behavior: 'smooth'})" class="btn-neon bg-brand-600 text-white px-5 py-2 rounded-full text-sm font-medium border border-brand-400/50">
                         Descargar App
                     </button>
@@ -151,26 +161,22 @@
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-b border-gray-800">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#funciones" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Funciones</a>
-                <a href="#ciencia" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Ciencia</a>
-                <a href="#stemi" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">STEMI Chat</a>
-                <a href="#lab" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Labs (Validación)</a>
+                <a href="#stemi" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Conoce a STEMI</a>
+                <a href="#precios" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Precios</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Mantenido) -->
     <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden hero-bg">
         <div class="absolute top-20 left-10 w-32 h-32 bg-brand-500/20 rounded-full blur-[80px]"></div>
         <div class="absolute bottom-20 right-10 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px]"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-                
-                <!-- Hero Text -->
                 <div class="lg:w-1/2 text-center lg:text-left">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/40 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
                         <span class="flex h-2 w-2 relative">
@@ -204,13 +210,12 @@
                         <p>Usada por estudiantes de ingeniería</p>
                     </div>
                 </div>
-
-                <!-- Hero Phone Mockup -->
                 <div class="lg:w-1/2 relative flex justify-center perspective-1000">
                     <div class="absolute inset-0 bg-brand-500/30 blur-[100px] rounded-full transform translate-y-20"></div>
                     <div class="relative w-[320px] md:w-[350px] bg-gray-900 rounded-[2.5rem] border-[8px] border-gray-800 shadow-2xl phone-shadow overflow-hidden anim-float">
                         <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-7 bg-black rounded-b-xl z-20"></div>
                         <div class="bg-[#F8F9FE] w-full h-full min-h-[700px] text-gray-900 pt-10 px-5 pb-5 font-sans relative">
+                            <!-- Mockup contenido -->
                             <div class="flex justify-between items-center mb-6">
                                 <div class="flex flex-col">
                                     <span class="text-xs text-gray-500 font-bold tracking-wider">TAREA PENDIENTE</span>
@@ -229,47 +234,24 @@
                             </div>
                             <div class="space-y-3">
                                 <div class="text-xs font-bold text-gray-400 uppercase mb-2 ml-1">Plan de Acción Generado</div>
-                                <div class="bg-white p-4 rounded-xl shadow-sm border border-green-100 flex items-center justify-between group cursor-pointer hover:border-brand-300 transition-colors">
+                                <div class="bg-white p-4 rounded-xl shadow-sm border border-green-100 flex items-center justify-between">
                                     <div class="flex items-center gap-3">
-                                        <div class="bg-green-100 p-2 rounded-lg text-green-700">
-                                            <i data-lucide="book-open" class="w-4 h-4"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-bold text-gray-900">Lectura Exploratoria</p>
-                                            <p class="text-xs text-gray-500">Técnica Chunking • 25 min</p>
-                                        </div>
+                                        <div class="bg-green-100 p-2 rounded-lg text-green-700"><i data-lucide="book-open" class="w-4 h-4"></i></div>
+                                        <div><p class="text-sm font-bold text-gray-900">Lectura Exploratoria</p><p class="text-xs text-gray-500">Técnica Chunking • 25 min</p></div>
                                     </div>
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-200"></div>
                                 </div>
-                                <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 flex items-center justify-between group cursor-pointer hover:border-brand-300 transition-colors">
+                                <div class="bg-white p-4 rounded-xl shadow-sm border border-blue-100 flex items-center justify-between">
                                     <div class="flex items-center gap-3">
-                                        <div class="bg-blue-100 p-2 rounded-lg text-blue-700">
-                                            <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-bold text-gray-900">Recuerdo Activo</p>
-                                            <p class="text-xs text-gray-500">Leer-Cerrar-Escribir • 25 min</p>
-                                        </div>
-                                    </div>
-                                    <div class="w-5 h-5 rounded-full border-2 border-gray-200"></div>
-                                </div>
-                                <div class="bg-white p-4 rounded-xl shadow-sm border border-purple-100 flex items-center justify-between group cursor-pointer hover:border-brand-300 transition-colors">
-                                    <div class="flex items-center gap-3">
-                                        <div class="bg-purple-100 p-2 rounded-lg text-purple-700">
-                                            <i data-lucide="video" class="w-4 h-4"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-sm font-bold text-gray-900">Método Feynman</p>
-                                            <p class="text-xs text-gray-500">Explicar conceptos • 25 min</p>
-                                        </div>
+                                        <div class="bg-blue-100 p-2 rounded-lg text-blue-700"><i data-lucide="edit-3" class="w-4 h-4"></i></div>
+                                        <div><p class="text-sm font-bold text-gray-900">Recuerdo Activo</p><p class="text-xs text-gray-500">Leer-Cerrar-Escribir • 25 min</p></div>
                                     </div>
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-200"></div>
                                 </div>
                             </div>
                             <div class="absolute bottom-8 left-5 right-5">
                                 <button class="w-full bg-brand-600 text-white py-4 rounded-xl font-bold text-center shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2">
-                                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
-                                    Empezar Pomodoro (25:00)
+                                    <i data-lucide="play" class="w-5 h-5 fill-current"></i> Empezar Pomodoro
                                 </button>
                             </div>
                         </div>
@@ -284,175 +266,149 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-text-glow">Todo lo que necesitas para aprobar</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">
-                    Diseñado específicamente para las cargas pesadas de ingeniería y ciencias.
-                </p>
+                <p class="text-gray-400 max-w-2xl mx-auto">Diseñado específicamente para las cargas pesadas de ingeniería y ciencias.</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Sincronización -->
                 <div class="glass-card neon-box-glow p-8 rounded-2xl group cursor-default">
                     <div class="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center mb-6 text-orange-400 group-hover:scale-110 transition-transform">
                         <i data-lucide="link" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-orange-300">Sincronización Institucional</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Conecta tu cuenta de <strong>Canvas o Moodle</strong>. STEMATICS importa automáticamente tus sílabos, fechas de exámenes y tareas.
-                    </p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Conecta tu cuenta de <strong>Canvas o Moodle</strong>. STEMATICS importa tus sílabos, fechas de exámenes y tareas automáticamente.</p>
                 </div>
+                <!-- Micropasos -->
                 <div class="glass-card neon-box-glow p-8 rounded-2xl group cursor-default">
                     <div class="w-12 h-12 bg-brand-500/20 rounded-xl flex items-center justify-center mb-6 text-brand-400 group-hover:scale-110 transition-transform">
                         <i data-lucide="list-checks" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-brand-300">Micropasos Inteligentes</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        ¿Tarea compleja? STEMI la desglosa en pasos pequeños (Chunking) para evitar que te bloquees. "Abrir libro" es un paso válido.
-                    </p>
+                    <p class="text-gray-400 text-sm leading-relaxed">¿Tarea compleja? STEMI la desglosa en pasos pequeños (Chunking) para evitar que te bloquees. "Abrir libro" es un paso válido.</p>
                 </div>
+                <!-- Métodos -->
                 <div class="glass-card neon-box-glow p-8 rounded-2xl group cursor-default">
                     <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 transition-transform">
                         <i data-lucide="brain-circuit" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-blue-300">Métodos Científicos</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Integra técnicas probadas como <strong>Active Recall</strong> y <strong>Feynman</strong> directamente en tu flujo de tareas.</p>
+                </div>
+                <!-- Recordatorios Inteligentes (NUEVO) -->
+                <div class="glass-card neon-box-glow p-8 rounded-2xl group cursor-default">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 text-green-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bell-ring" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-green-300">Recordatorios Inteligentes</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Integra técnicas probadas como <strong>Active Recall</strong> y <strong>Feynman</strong> directamente en tu flujo de tareas. No solo estudies, aprende.
+                        Olvídate del estrés. STEMI configura automáticamente tus recordatorios de entrega, hitos de proyectos y sesiones de <strong>Repetición Espaciada</strong>. Tu mente libre para aprender, no para recordar fechas.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NUEVA SECCIÓN: FUNDAMENTO CIENTÍFICO -->
-    <section id="ciencia" class="py-24 bg-[#080810] relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-900/20 via-[#05050A] to-[#05050A]"></div>
+    <!-- NEW SECTION: CONOCE A STEMI -->
+    <section id="stemi" class="py-24 relative overflow-hidden bg-[#0A0A12]">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-900/30 via-[#05050A] to-[#05050A]"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-20">
-                <span class="text-brand-400 font-mono text-sm tracking-widest uppercase mb-2 block">Metodología Comprobada</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 neon-text-glow">La Ciencia detrás del Éxito</h2>
-                <p class="text-gray-400 max-w-3xl mx-auto text-lg">
-                    La mayoría de apps te dan herramientas sueltas. STEMATICS integra <span class="text-white font-bold">5 pilares de neurociencia</span> en un solo flujo de trabajo para garantizar retención a largo plazo.
+            <!-- Intro y Avatar -->
+            <div class="flex flex-col items-center text-center mb-20">
+                <div class="relative mb-8 group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-brand-500 to-purple-500 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-1000 animate-pulse"></div>
+                    <div class="relative w-40 h-40 bg-[#161821] rounded-full border-4 border-brand-500/30 flex items-center justify-center overflow-hidden shadow-2xl">
+                        <!-- IMAGEN ACTUALIZADA DE STEMI -->
+                        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="STEMI Avatar" class="w-28 h-28 transform hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]">
+                    </div>
+                    <div class="absolute bottom-0 right-0 bg-green-500 w-8 h-8 rounded-full border-4 border-[#0A0A12] flex items-center justify-center" title="Online 24/7">
+                        <i data-lucide="zap" class="w-4 h-4 text-white"></i>
+                    </div>
+                </div>
+                
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 neon-text-glow">Hola, soy <span class="gradient-text">STEMI</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl leading-relaxed">
+                    No soy solo un chatbot. Soy tu <strong>Mentor Académico Inteligente</strong>. <br class="hidden md:block">
+                    Estoy diseñado para evitar que repruebes, calmar tu ansiedad y organizar tu vida universitaria cuando sientes que no puedes más.
                 </p>
             </div>
 
-            <!-- Grilla de Métodos -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-                <!-- Active Recall -->
-                <div class="glass-card p-6 rounded-xl border-l-4 border-l-blue-500 hover:bg-white/5 transition-all">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-blue-500/20 p-2 rounded-lg text-blue-400"><i data-lucide="zap" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold text-white text-lg">Active Recall</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        No releas pasivamente. La app te obliga a "recuperar" la información de tu memoria (ej. con flashcards o preguntas) fortaleciendo las conexiones neuronales.
-                    </p>
-                </div>
-                <!-- Spaced Repetition -->
-                <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500 hover:bg-white/5 transition-all">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-purple-500/20 p-2 rounded-lg text-purple-400"><i data-lucide="calendar-clock" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold text-white text-lg">Spaced Repetition</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        Combatimos la "Curva del Olvido". STEMI programa repasos automáticos justo antes de que olvides el material, maximizando la eficiencia.
-                    </p>
-                </div>
-                <!-- Chunking -->
-                <div class="glass-card p-6 rounded-xl border-l-4 border-l-green-500 hover:bg-white/5 transition-all">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-green-500/20 p-2 rounded-lg text-green-400"><i data-lucide="layers" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold text-white text-lg">Método Chunking</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        Divide temas complejos (como Cálculo Vectorial) en trozos digeribles. El cerebro procesa mejor la información estructurada en bloques pequeños.
-                    </p>
-                </div>
-                <!-- Pomodoro -->
-                <div class="glass-card p-6 rounded-xl border-l-4 border-l-red-500 hover:bg-white/5 transition-all">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-red-500/20 p-2 rounded-lg text-red-400"><i data-lucide="timer" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold text-white text-lg">Foco Pomodoro</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        Ciclos de 25 min de enfoque intenso + 5 min de descanso. Evita el agotamiento mental y mantiene la concentración alta durante horas.
-                    </p>
-                </div>
-                <!-- Micropasos (Unique Selling Point) -->
-                <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-500 col-span-1 md:col-span-2 lg:col-span-2 relative overflow-hidden group">
-                    <div class="absolute right-0 top-0 w-32 h-32 bg-brand-500/10 blur-[40px] group-hover:bg-brand-500/20 transition-all"></div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-brand-500/20 p-2 rounded-lg text-brand-400"><i data-lucide="list-tree" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold text-white text-lg">Micropasos + IA (Exclusivo)</h3>
-                    </div>
-                    <p class="text-gray-300">
-                        La procrastinación nace del miedo a tareas grandes. <strong class="text-brand-400">STEMI desglosa automáticamente</strong> "Estudiar para Física" en acciones ridículamente sencillas (ej. "Abrir libro pág 40"). Esto engaña al cerebro para empezar sin resistencia.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chat STEMI Section (Info) -->
-    <section id="stemi" class="py-24 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-card rounded-3xl p-8 md:p-12 border border-brand-500/30 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-brand-600/20 blur-[100px] rounded-full -mr-20 -mt-20"></div>
-                <div class="flex flex-col md:flex-row items-center gap-12 relative z-10">
-                    <div class="md:w-1/2">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-semibold mb-6">
-                            <i data-lucide="sparkles" class="w-3 h-3"></i> Mentoría Emocional 24/7
+            <!-- Bento Grid de Funciones -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
+                <!-- 1. Explicación STEM (Grande) -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-2 lg:col-span-2 flex flex-col justify-center neon-box-glow group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-blue-500/20 p-3 rounded-xl text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                            <i data-lucide="graduation-cap" class="w-8 h-8"></i>
                         </div>
-                        <h2 class="text-3xl md:text-5xl font-bold mb-6">"Me siento perdido..."</h2>
-                        <p class="text-lg text-gray-300 mb-6 leading-relaxed">
-                            La universidad no es solo difícil académicamente. STEMI está entrenado para darte apoyo emocional, motivación y estructura cuando sientes que no puedes más.
-                        </p>
-                        <div class="flex flex-col gap-4">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gray-800 p-2 rounded-lg text-brand-400"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
-                                <div>
-                                    <h4 class="font-bold text-white">Conversación Natural</h4>
-                                    <p class="text-sm text-gray-400">Habla con STEMI como con un amigo experto.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Académico</span>
                     </div>
-                    <!-- Chat mock -->
-                    <div class="md:w-1/2 w-full">
-                         <div class="bg-white rounded-2xl shadow-xl overflow-hidden max-w-sm mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500">
-                            <div class="bg-brand-500 p-4 flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                                    <i data-lucide="bot" class="text-brand-600 w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white font-bold text-sm">Chat con STEMI</p>
-                                    <p class="text-brand-100 text-xs flex items-center gap-1"><span class="w-2 h-2 bg-green-400 rounded-full"></span> En línea</p>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 p-6 space-y-4 h-[350px] overflow-y-auto">
-                                <div class="flex justify-end">
-                                    <div class="bg-brand-600 text-white p-3 rounded-2xl rounded-tr-sm text-sm max-w-[85%] shadow-sm">
-                                        Me siento perdido no sé cuál es mi motivación 😔
-                                    </div>
-                                </div>
-                                <div class="flex justify-start">
-                                    <div class="bg-white text-gray-800 p-4 rounded-2xl rounded-tl-sm text-sm max-w-[90%] shadow-sm border border-gray-100">
-                                        <p class="mb-3">Es normal sentir eso en la U. No te preocupes, vamos a redescubrirla juntos. 🌟</p>
-                                        <p class="font-bold text-gray-900 mb-2">Empecemos con 3 puntos:</p>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                                            <li><strong>El "Por Qué" Inicial:</strong> ¿Qué te emocionó al inscribirte?</li>
-                                            <li><strong>¿Qué enciende tu chispa?</strong> ¿Algún proyecto te dio curiosidad?</li>
-                                            <li><strong>Impacto:</strong> ¿Qué problema quieres resolver en el mundo?</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Genio en Materias STEM</h3>
+                    <p class="text-gray-400">¿Cálculo, Física o Programación? No solo te doy la respuesta. Te explico el "por qué", resuelvo ejercicios paso a paso y traduzco conceptos difíciles a lenguaje simple.</p>
+                </div>
+                <!-- 2. Micropasos (Destacado) -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-1 lg:col-span-1 bg-gradient-to-br from-[#161821] to-brand-900/20 border-brand-500/30 group">
+                    <div class="bg-brand-500/20 p-3 rounded-xl text-brand-400 w-fit mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="list-tree" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Adiós Procrastinación</h3>
+                    <p class="text-gray-400 text-sm">Rompo la inercia dividiendo tareas gigantes en micropasos ridículamente sencillos de 5 minutos.</p>
+                </div>
+                <!-- 3. Planificación -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-1 lg:col-span-1 group">
+                    <div class="bg-orange-500/20 p-3 rounded-xl text-orange-400 w-fit mb-4">
+                        <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Tu Agenda Viva</h3>
+                    <p class="text-gray-400 text-sm">Si te atrasas, no te juzgo. Reajusto tu plan automáticamente para que sigas al día sin estrés.</p>
+                </div>
+                <!-- 4. Riesgo Académico -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-1 lg:col-span-1 group">
+                    <div class="bg-red-500/20 p-3 rounded-xl text-red-400 w-fit mb-4">
+                        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Detector de Riesgo</h3>
+                    <p class="text-gray-400 text-sm">Identifico patrones de peligro (como bajo avance) antes de que sea tarde para salvar la materia.</p>
+                </div>
+                <!-- 5. Apoyo Emocional (Grande) -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-2 lg:col-span-2 flex flex-col justify-center neon-box-glow group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-pink-500/20 p-3 rounded-xl text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                            <i data-lucide="heart-handshake" class="w-8 h-8"></i>
                         </div>
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Bienestar</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Apoyo Emocional 24/7</h3>
+                    <p class="text-gray-400">La U es dura. Cuando sientas ansiedad o bloqueo, estoy aquí para escucharte sin juicios, validar tus emociones y darte estrategias para calmarte.</p>
+                </div>
+                <!-- 6. Perfil Cognitivo -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-1 lg:col-span-1 group">
+                    <div class="bg-green-500/20 p-3 rounded-xl text-green-400 w-fit mb-4">
+                        <i data-lucide="fingerprint" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">100% Personalizado</h3>
+                    <p class="text-gray-400 text-sm">Aprendo tus horas de energía y estilo de aprendizaje para darte el plan perfecto.</p>
+                </div>
+                <!-- 7. Comunidad -->
+                <div class="glass-card p-6 rounded-2xl md:col-span-3 lg:col-span-4 flex items-center justify-between gap-6 group hover:bg-white/5 transition-colors">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
+                            <i data-lucide="users" class="text-yellow-400"></i> Conexión con Expertos
+                        </h3>
+                        <p class="text-gray-400 text-sm">Si mi IA no es suficiente, conecto tu duda con el <strong>Foro de Expertos</strong> donde profesores certificados te responderán.</p>
+                    </div>
+                    <div class="hidden md:block">
+                        <button onclick="document.getElementById('registro').scrollIntoView({behavior: 'smooth'})" class="px-6 py-2 rounded-full border border-gray-600 text-white hover:bg-white hover:text-black transition-all text-sm font-bold">
+                            Unirme a la Comunidad
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- LABORATORIO INTERACTIVO (Demos Funcionales ACTUALIZADOS) -->
+    <!-- LABORATORIO INTERACTIVO (Demos Funcionales) -->
     <section id="lab" class="py-24 relative overflow-hidden bg-black/50">
+        <!-- ... (Content maintained) ... -->
         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
         <div class="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
         
@@ -467,24 +423,8 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Card 1: Scanner Demo (Mantenido) -->
-                <div class="glass-card p-1 rounded-2xl hover:bg-brand-500/20 transition-all duration-300 group">
-                    <div class="bg-[#0A0A12] p-6 rounded-xl h-full flex flex-col relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-3 opacity-50 group-hover:opacity-100 transition-opacity">
-                            <i data-lucide="scan-line" class="text-brand-400 w-8 h-8"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Scanner de Apuntes IA</h3>
-                        <p class="text-gray-400 text-sm mb-6 flex-grow">
-                            Convierte fotos de cuadernos en resúmenes. Sube una imagen para ver la magia.
-                        </p>
-                        <button onclick="openScannerDemo()" class="w-full py-3 rounded-lg border border-brand-500/30 text-brand-300 font-bold hover:bg-brand-600 hover:text-white hover:border-transparent transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-                            <span>Subir Apunte</span> <i data-lucide="upload" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Card 2: Chat STEMI NotebookLM (NUEVO) -->
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <!-- Card 1: Chat STEMI NotebookLM -->
                 <div class="glass-card p-1 rounded-2xl hover:bg-blue-500/20 transition-all duration-300 group">
                     <div class="bg-[#0A0A12] p-6 rounded-xl h-full flex flex-col relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-3 opacity-50 group-hover:opacity-100 transition-opacity">
@@ -492,7 +432,7 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Chat STEMI (Notebook)</h3>
                         <p class="text-gray-400 text-sm mb-6 flex-grow">
-                            Habla con un asistente experto. Interactúa con una IA que recuerda el contexto y organiza tus ideas como un cuaderno inteligente.
+                            Habla con un asistente experto. Interactúa con una IA que recuerda el contexto, te ofrece opciones inteligentes y te explica ejercicios con fotos.
                         </p>
                         <button onclick="openChatDemo()" class="w-full py-3 rounded-lg border border-blue-500/30 text-blue-300 font-bold hover:bg-blue-600 hover:text-white hover:border-transparent transition-all flex items-center justify-center gap-2 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
                             <span>Abrir Chat</span> <i data-lucide="message-circle" class="w-4 h-4"></i>
@@ -500,7 +440,7 @@
                     </div>
                 </div>
 
-                <!-- Card 3: Neuro-Planificador (NUEVO) -->
+                <!-- Card 2: Neuro-Planificador -->
                 <div class="glass-card p-1 rounded-2xl hover:bg-green-500/20 transition-all duration-300 group">
                     <div class="bg-[#0A0A12] p-6 rounded-xl h-full flex flex-col relative overflow-hidden">
                         <div class="absolute top-0 right-0 p-3 opacity-50 group-hover:opacity-100 transition-opacity">
@@ -519,51 +459,140 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="precios" class="py-24 bg-gray-900 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-4 neon-text-glow">Inversión en tu Futuro</h2>
-            <p class="text-gray-400 mb-12">Menos de lo que cuesta un café y un sandwich.</p>
-            <div class="max-w-md mx-auto relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <div class="relative bg-[#161821] border border-gray-700 rounded-2xl p-8 text-left neon-box-glow">
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Plan Estudiante Pro</h3>
-                            <span class="inline-block px-2 py-1 bg-brand-500/20 text-brand-300 text-xs rounded mt-2">Recomendado</span>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-4xl font-bold text-white">$4.99</span>
-                            <span class="text-gray-500 text-sm">/mes</span>
-                        </div>
+    <!-- Pricing Section (ACTUALIZADO: 3 Opciones + Pase Examen) -->
+    <section id="precios" class="py-24 bg-gray-900 border-t border-white/5 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 neon-text-glow">Elige tu Plan</h2>
+                <p class="text-gray-400 mb-8">Inversión inteligente para tu futuro académico.</p>
+                
+                <!-- Toggle Mensual/Semestral/Anual -->
+                <div class="flex justify-center mb-12">
+                    <div class="pricing-toggle shadow-lg border border-gray-700">
+                        <div id="toggle-bg" class="pricing-toggle-bg"></div>
+                        <button onclick="switchPlan('monthly')" id="btn-monthly" class="active">Mensual</button>
+                        <button onclick="switchPlan('semester')" id="btn-semester">Semestral (-15%)</button>
+                        <button onclick="switchPlan('annual')" id="btn-annual">Anual (-30%)</button>
                     </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300 text-sm">
-                            <i data-lucide="check" class="text-green-500 w-5 h-5"></i> Chats ilimitados con STEMI
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300 text-sm">
-                            <i data-lucide="check" class="text-green-500 w-5 h-5"></i> Modo "Mentor Humano"
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300 text-sm">
-                            <i data-lucide="check" class="text-green-500 w-5 h-5"></i> Simuladores de parciales
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300 text-sm">
-                            <i data-lucide="check" class="text-green-500 w-5 h-5"></i> Detección de riesgo académico
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300 text-sm">
-                            <i data-lucide="check" class="text-green-500 w-5 h-5"></i> Sincronización completa (LMS)
-                        </li>
-                    </ul>
-                    <button class="w-full bg-white text-gray-900 font-bold py-3 rounded-xl hover:bg-gray-100 transition-colors flex justify-center items-center gap-2">
-                        Obtener 7 días GRATIS <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </button>
-                    <p class="text-center text-xs text-gray-500 mt-4">Cancela cuando quieras.</p>
                 </div>
             </div>
+
+            <!-- Pricing Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+                
+                <!-- Plan ESENCIAL (Gratis) -->
+                <div class="glass-card p-8 rounded-2xl border border-gray-700 hover:border-gray-500 transition-all flex flex-col">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">Esencial</h3>
+                        <p class="text-gray-400 text-sm">Perfecto para empezar a organizarte.</p>
+                    </div>
+                    <div class="text-4xl font-bold text-white mb-6">$0 <span class="text-lg text-gray-500 font-normal">/mes</span></div>
+                    
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-gray-500 w-5 h-5 mt-0.5"></i>
+                            <span>Chat IA Básico (20 msgs/día)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-gray-500 w-5 h-5 mt-0.5"></i>
+                            <span>Planificación Semestral Básica</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-gray-500 w-5 h-5 mt-0.5"></i>
+                            <span>Micropasos (Máx 3/día)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-gray-500 w-5 h-5 mt-0.5"></i>
+                            <span>Foro Comunitario</span>
+                        </li>
+                    </ul>
+                    <button onclick="document.getElementById('registro').scrollIntoView({behavior: 'smooth'})" class="w-full py-3 border border-gray-600 text-white rounded-xl font-bold hover:bg-gray-800 transition-all">
+                        Empezar Gratis
+                    </button>
+                </div>
+
+                <!-- Plan STEMI+ (Premium) -->
+                <div class="glass-card p-8 rounded-2xl border border-brand-500 relative flex flex-col neon-box-glow bg-[#161821]">
+                    <div class="absolute -top-4 right-8 bg-gradient-to-r from-brand-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                        RECOMENDADO
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                            STEMI+ <i data-lucide="sparkles" class="text-yellow-400 w-5 h-5"></i>
+                        </h3>
+                        <p class="text-gray-400 text-sm">El poder total para dominar tu carrera.</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span id="price-display" class="text-5xl font-bold text-white">$4.99</span>
+                            <span id="period-display" class="text-lg text-gray-500 font-normal">/mes</span>
+                        </div>
+                        <p id="savings-display" class="text-xs text-green-400 mt-1 h-4 font-bold"></p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-start gap-3 text-white text-sm font-medium">
+                            <i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5 mt-0.5"></i>
+                            <span>Chat IA Ilimitado & Explicaciones Profundas</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-brand-500 w-5 h-5 mt-0.5"></i>
+                            <span>Planificación Dinámica (Se ajusta si fallas)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-brand-500 w-5 h-5 mt-0.5"></i>
+                            <span>Micropasos Ilimitados + Anti-procrastinación</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-brand-500 w-5 h-5 mt-0.5"></i>
+                            <span>Simuladores de Examen Adaptativos</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-sm">
+                            <i data-lucide="check" class="text-brand-500 w-5 h-5 mt-0.5"></i>
+                            <span>Respuestas Verificadas por Expertos</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full py-4 bg-brand-600 text-white rounded-xl font-bold hover:bg-brand-500 transition-all shadow-[0_0_20px_rgba(124,58,237,0.4)] flex justify-center items-center gap-2 group">
+                        <i data-lucide="zap" class="w-5 h-5 group-hover:text-yellow-300 transition-colors"></i>
+                        Obtener 7 días GRATIS
+                    </button>
+                    <p class="text-center text-xs text-gray-500 mt-3">Cancela cuando quieras dentro de la prueba.</p>
+                </div>
+            </div>
+
+            <!-- EXAM SEASON PROMO BANNER (SUPER VISIBLE) -->
+            <div class="relative max-w-4xl mx-auto rounded-2xl overflow-hidden group cursor-pointer border-2 border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.3)] hover:shadow-[0_0_50px_rgba(239,68,68,0.5)] transition-all transform hover:-translate-y-1">
+                <div class="absolute inset-0 bg-gradient-to-r from-red-900/90 to-purple-900/90 z-0"></div>
+                <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 z-0"></div>
+                
+                <div class="relative z-10 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="text-left">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse flex items-center gap-1"><i data-lucide="flame" class="w-3 h-3"></i> SOS EXÁMENES</span>
+                            <span class="text-red-300 text-sm font-bold uppercase tracking-wider">Oferta de Emergencia</span>
+                        </div>
+                        <h3 class="text-2xl md:text-4xl font-bold text-white mb-2">¿Semana de Parciales? 😱</h3>
+                        <p class="text-gray-200 text-sm max-w-lg leading-relaxed">
+                            No necesitas pagar el mes completo. Activa el <strong>"Pase de Supervivencia"</strong>: 14 días de acceso total Premium para salvar el semestre a precio de café.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-end text-right min-w-[140px]">
+                        <span class="text-gray-400 text-sm line-through decoration-red-500">$4.99</span>
+                        <span class="text-4xl font-bold text-white">$1.99</span>
+                        <span class="text-xs text-red-200 mb-3">Pago único (2 semanas)</span>
+                        <button class="w-full bg-white text-red-900 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg flex items-center justify-center gap-2">
+                            Salvar Semestre <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- Waitlist Form (NETLIFY) -->
+    <!-- Waitlist Form (Mantenido) -->
     <section id="registro" class="py-24 relative">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="glass-card p-10 rounded-3xl text-center relative overflow-hidden border-brand-500/20 shadow-[0_0_50px_rgba(139,92,246,0.1)]">
@@ -574,8 +603,16 @@
                     Únete a la lista de espera y sé de los primeros en probar la beta con sincronización institucional.
                 </p>
 
-                <form name="lista-espera" method="POST" data-netlify="true" id="registroForm" class="max-w-md mx-auto space-y-4">
+                <!-- FORMULARIO NETLIFY -->
+                <form 
+                    name="lista-espera" 
+                    method="POST" 
+                    data-netlify="true" 
+                    id="registroForm" 
+                    class="max-w-md mx-auto space-y-4"
+                >
                     <input type="hidden" name="form-name" value="lista-espera" />
+                    <!-- Input oculto para rastrear qué funcion experimental votaron -->
                     <input type="hidden" name="funcion_voto" id="funcionVotoInput" value="" />
 
                     <div class="relative">
@@ -601,6 +638,7 @@
 
     <!-- SOBRE NOSOTROS (ESPOL) -->
     <section id="nosotros" class="py-16 bg-[#030305] border-t border-white/5">
+        <!-- ... (Contenido mantenido) ... -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="text-left max-w-2xl">
@@ -615,6 +653,7 @@
                     </p>
                 </div>
                 <div class="opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                    <!-- Placeholder visual para logo ESPOL o equipo -->
                     <div class="h-16 w-48 border border-white/10 rounded flex items-center justify-center bg-white/5 text-gray-500 text-xs font-mono tracking-widest">
                         PROYECTO ESPOL
                     </div>
@@ -641,25 +680,83 @@
         </div>
     </footer>
 
-    <!-- 1. SCANNER MODAL -->
+    <!-- MODALS (Chat, Planner, Scanner - Mantenido) -->
+    <!-- 1. CHAT STEMI MODAL -->
+    <div id="modal-chat" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDemo('chat')"></div>
+        <div class="bg-[#12121A] border border-blue-500/50 rounded-2xl p-6 max-w-lg w-full h-[650px] flex flex-col relative z-10 shadow-2xl">
+            <button onclick="closeDemo('chat')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x"></i></button>
+            <h3 class="text-xl font-bold mb-2 flex items-center gap-2 text-white">
+                <i data-lucide="message-square" class="text-blue-400"></i> STEMI Notebook
+            </h3>
+            <p class="text-xs text-gray-500 mb-4 border-b border-gray-800 pb-2">Asistente IA Experimental</p>
+            <div id="chat-messages" class="flex-grow overflow-y-auto mb-4 pr-2 space-y-3 custom-scrollbar">
+                <div class="chat-bubble chat-bot">Hola 👋 Soy STEMI. Cuéntame, ¿qué problema académico te tiene atascado hoy?</div>
+            </div>
+            <div class="relative mt-auto">
+                <input type="text" id="chat-input" placeholder="Ej. No entiendo Límites..." 
+                    class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 pl-4 pr-12 text-white focus:border-blue-500 focus:outline-none"
+                    onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                <button onclick="sendChatMessage()" class="absolute right-2 top-2 p-1.5 bg-blue-600 rounded-lg hover:bg-blue-500 transition-colors">
+                    <i data-lucide="send" class="w-4 h-4 text-white"></i>
+                </button>
+            </div>
+            <input type="file" id="chat-file-upload" class="hidden" accept="image/*" onchange="handleFileUpload(this)">
+        </div>
+    </div>
+
+    <!-- 2. NEURO-PLANNER MODAL -->
+    <div id="modal-planner" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDemo('planner')"></div>
+        <div class="bg-[#12121A] border border-green-500/50 rounded-2xl p-6 max-w-lg w-full relative z-10 shadow-2xl">
+            <button onclick="closeDemo('planner')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x"></i></button>
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-white">
+                <i data-lucide="brain-circuit" class="text-green-400"></i> Neuro-Planificador
+            </h3>
+            <div id="planner-form">
+                <label class="block text-xs text-gray-400 uppercase font-bold mb-1">Materia</label>
+                <input type="text" id="planner-subject" placeholder="Ej. Cálculo Vectorial" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 mb-3 text-white focus:border-green-500 focus:outline-none">
+                <label class="block text-xs text-gray-400 uppercase font-bold mb-1">Tema Específico</label>
+                <input type="text" id="planner-topic" placeholder="Ej. Integrales de Línea" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 mb-3 text-white focus:border-green-500 focus:outline-none">
+                <label class="block text-xs text-gray-400 uppercase font-bold mb-1">Tipo de Tarea</label>
+                <select id="planner-type" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 mb-6 text-white focus:border-green-500 focus:outline-none">
+                    <option value="teoria">Teórica (Leer/Memorizar)</option>
+                    <option value="practica">Práctica (Resolver Problemas)</option>
+                    <option value="proyecto">Proyecto (Investigación)</option>
+                </select>
+                <button onclick="generateNeuroPlan()" class="w-full py-3 bg-green-600 hover:bg-green-500 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="sparkles"></i> Generar Estrategia
+                </button>
+            </div>
+            <div id="planner-loading" class="hidden text-center py-10">
+                <div class="loader mx-auto mb-4 border-green-500"></div>
+                <p class="text-green-400 text-sm animate-pulse">Aplicando algoritmos de neurociencia...</p>
+            </div>
+            <div id="planner-result" class="hidden mt-4">
+                <div class="bg-gray-800/50 p-4 rounded-xl border border-green-500/30">
+                    <h4 class="text-green-400 font-bold text-sm mb-3 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Plan Optimizado</h4>
+                    <div class="space-y-3 text-sm text-gray-300" id="planner-steps"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. SCANNER MODAL -->
     <div id="modal-scanner" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center px-4">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDemo('scanner')"></div>
         <div class="bg-[#12121A] border border-brand-500/50 rounded-2xl p-6 max-w-md w-full relative z-10 shadow-2xl">
             <button onclick="closeDemo('scanner')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x"></i></button>
             <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="scan-line" class="text-brand-400"></i> Scanner Demo</h3>
-            
             <div id="scanner-upload-view">
                 <div class="border-2 border-dashed border-gray-700 rounded-xl p-8 text-center hover:border-brand-500 transition-colors cursor-pointer" onclick="runScannerSim()">
                     <i data-lucide="upload-cloud" class="w-10 h-10 text-gray-500 mx-auto mb-2"></i>
                     <p class="text-sm text-gray-400">Toca para subir una foto de tus apuntes</p>
                 </div>
             </div>
-
             <div id="scanner-processing-view" class="hidden text-center py-8">
                 <div class="loader mx-auto mb-4 border-brand-500"></div>
                 <p class="text-brand-300 text-sm animate-pulse">Analizando caligrafía con IA...</p>
             </div>
-
             <div id="scanner-result-view" class="hidden">
                 <div class="bg-gray-800 rounded-lg p-4 text-left border-l-4 border-brand-500">
                     <h4 class="font-bold text-white mb-2">Resumen Generado:</h4>
@@ -674,79 +771,6 @@
         </div>
     </div>
 
-    <!-- 2. CHAT STEMI MODAL (Notebook Style) -->
-    <div id="modal-chat" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center px-4">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDemo('chat')"></div>
-        <div class="bg-[#12121A] border border-blue-500/50 rounded-2xl p-6 max-w-lg w-full h-[600px] flex flex-col relative z-10 shadow-2xl">
-            <button onclick="closeDemo('chat')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x"></i></button>
-            <h3 class="text-xl font-bold mb-2 flex items-center gap-2 text-white">
-                <i data-lucide="message-square" class="text-blue-400"></i> STEMI Notebook
-            </h3>
-            <p class="text-xs text-gray-500 mb-4 border-b border-gray-800 pb-2">Asistente IA Experimental - v0.9 (Beta)</p>
-            
-            <!-- Chat Area -->
-            <div id="chat-messages" class="flex-grow overflow-y-auto mb-4 pr-2 space-y-3">
-                <div class="chat-bubble chat-bot">
-                    Hola 👋 Soy STEMI. ¿En qué tema tienes dudas hoy? Puedo explicarte conceptos o ayudarte a repasar.
-                </div>
-            </div>
-
-            <!-- Input Area -->
-            <div class="relative">
-                <input type="text" id="chat-input" placeholder="Escribe tu duda aquí..." 
-                    class="w-full bg-gray-900 border border-gray-700 rounded-xl py-3 pl-4 pr-12 text-white focus:border-blue-500 focus:outline-none"
-                    onkeypress="if(event.key === 'Enter') sendChatMessage()">
-                <button onclick="sendChatMessage()" class="absolute right-2 top-2 p-1.5 bg-blue-600 rounded-lg hover:bg-blue-500 transition-colors">
-                    <i data-lucide="send" class="w-4 h-4 text-white"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. NEURO-PLANNER MODAL (Task Manager) -->
-    <div id="modal-planner" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center px-4">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeDemo('planner')"></div>
-        <div class="bg-[#12121A] border border-green-500/50 rounded-2xl p-6 max-w-lg w-full relative z-10 shadow-2xl">
-            <button onclick="closeDemo('planner')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x"></i></button>
-            <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-white">
-                <i data-lucide="brain-circuit" class="text-green-400"></i> Neuro-Planificador
-            </h3>
-            
-            <div id="planner-form">
-                <label class="block text-xs text-gray-400 uppercase font-bold mb-1">Materia</label>
-                <input type="text" id="planner-subject" placeholder="Ej. Cálculo Vectorial" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 mb-3 text-white focus:border-green-500 focus:outline-none">
-                
-                <label class="block text-xs text-gray-400 uppercase font-bold mb-1">Tema Específico</label>
-                <input type="text" id="planner-topic" placeholder="Ej. Integrales de Línea" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 mb-3 text-white focus:border-green-500 focus:outline-none">
-                
-                <label class="block text-xs text-gray-400 uppercase font-bold mb-1">Tipo de Tarea</label>
-                <select id="planner-type" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 mb-6 text-white focus:border-green-500 focus:outline-none">
-                    <option value="teoria">Teórica (Leer/Memorizar)</option>
-                    <option value="practica">Práctica (Resolver Problemas)</option>
-                    <option value="proyecto">Proyecto (Investigación)</option>
-                </select>
-
-                <button onclick="generateNeuroPlan()" class="w-full py-3 bg-green-600 hover:bg-green-500 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
-                    <i data-lucide="sparkles"></i> Generar Estrategia
-                </button>
-            </div>
-
-            <div id="planner-loading" class="hidden text-center py-10">
-                <div class="loader mx-auto mb-4 border-green-500"></div>
-                <p class="text-green-400 text-sm animate-pulse">Aplicando algoritmos de neurociencia...</p>
-            </div>
-
-            <div id="planner-result" class="hidden mt-4">
-                <div class="bg-gray-800/50 p-4 rounded-xl border border-green-500/30">
-                    <h4 class="text-green-400 font-bold text-sm mb-3 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Plan Optimizado</h4>
-                    <div class="space-y-3 text-sm text-gray-300" id="planner-steps">
-                        <!-- Steps injected via JS -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         lucide.createIcons();
         const btn = document.getElementById('mobile-menu-btn');
@@ -755,8 +779,43 @@
             menu.classList.toggle('hidden');
         });
 
+        // PRICING TOGGLE LOGIC
+        function switchPlan(cycle) {
+            // Reset active states
+            document.getElementById('btn-monthly').classList.remove('active');
+            document.getElementById('btn-semester').classList.remove('active');
+            document.getElementById('btn-annual').classList.remove('active');
+            
+            // Set new active
+            document.getElementById('btn-' + cycle).classList.add('active');
+            
+            // Move background pill
+            const pill = document.getElementById('toggle-bg');
+            if (cycle === 'monthly') pill.style.left = '4px';
+            if (cycle === 'semester') pill.style.left = '33%'; // Adjusted for better center
+            if (cycle === 'annual') pill.style.left = '66%';
+
+            // Update Price Text
+            const priceDisplay = document.getElementById('price-display');
+            const savingsDisplay = document.getElementById('savings-display');
+            const periodDisplay = document.getElementById('period-display');
+            
+            if (cycle === 'monthly') {
+                priceDisplay.innerHTML = '$4.99';
+                periodDisplay.innerHTML = '/mes';
+                savingsDisplay.innerHTML = '';
+            } else if (cycle === 'semester') {
+                priceDisplay.innerHTML = '$24.99'; // Approx $4.16/mo
+                periodDisplay.innerHTML = '/semestre';
+                savingsDisplay.innerHTML = '¡Ahorras un 15%!';
+            } else if (cycle === 'annual') {
+                priceDisplay.innerHTML = '$45.99'; // Approx $3.83/mo
+                periodDisplay.innerHTML = '/año';
+                savingsDisplay.innerHTML = '¡Mejor valor! Ahorras un 30%';
+            }
+        }
+
         // --- ANALYTICS FUNCTION ---
-        // Envía datos silenciosamente a Netlify Forms
         function sendAnalytics(tool, data) {
             const formData = new FormData();
             formData.append('form-name', 'demo_analytics');
@@ -771,8 +830,7 @@
             }).catch(err => console.log('Analytics silent fail:', err));
         }
 
-        // --- LOGICA DEMOS ---
-
+        // --- DEMOS LOGIC (Reused from previous) ---
         function closeDemo(type) {
             document.getElementById('modal-' + type).classList.remove('active');
             if(type === 'planner') {
@@ -781,8 +839,80 @@
                 document.getElementById('planner-result').classList.add('hidden');
             }
         }
-
-        // 1. SCANNER DEMO
+        function openChatDemo() { document.getElementById('modal-chat').classList.add('active'); }
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const container = document.getElementById('chat-messages');
+            const msg = input.value.trim();
+            if(!msg) return;
+            container.innerHTML += `<div class="chat-bubble chat-user">${msg}</div>`;
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+            sendAnalytics('Chat_STEMI', msg);
+            const thinkingId = 'thinking-' + Date.now();
+            container.innerHTML += `<div id="${thinkingId}" class="chat-bubble chat-bot"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+            container.scrollTop = container.scrollHeight;
+            setTimeout(() => {
+                document.getElementById(thinkingId).remove();
+                let botText = "Entendido. Para ayudarte mejor, ¿qué prefieres hacer?";
+                let optionsHTML = `
+                    <div class="chat-options">
+                        <button class="chat-option-btn" onclick="handleOptionClick('resumen', '${msg}')">📝 Resumir Tema</button>
+                        <button class="chat-option-btn" onclick="handleOptionClick('ejercicio', '${msg}')">📸 Explicar Ejercicio</button>
+                        <button class="chat-option-btn" onclick="handleOptionClick('plan', '${msg}')">📅 Crear Plan</button>
+                    </div>`;
+                if(msg.toLowerCase().includes('hola')) {
+                    botText = "¡Hola! Soy STEMI. ¿En qué materia tienes dificultades hoy?";
+                    optionsHTML = ""; 
+                }
+                container.innerHTML += `<div class="chat-bubble chat-bot">${botText}</div>${optionsHTML}`;
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
+        }
+        function handleOptionClick(action, context) {
+            const container = document.getElementById('chat-messages');
+            const options = document.querySelectorAll('.chat-options');
+            if(options.length > 0) options[options.length - 1].remove();
+            if (action === 'resumen') {
+                container.innerHTML += `<div class="chat-bubble chat-user">Resumen</div><div class="chat-bubble chat-bot">Aquí tienes un resumen estructurado sobre <strong>${context}</strong>...</div>`;
+            } else if (action === 'ejercicio') {
+                container.innerHTML += `<div class="chat-bubble chat-user">Ejercicio</div><div class="chat-bubble chat-bot">Perfecto. Sube una foto clara.</div>`;
+                document.getElementById('chat-file-upload').click();
+            } else if (action === 'plan') {
+                closeDemo('chat'); openPlannerDemo();
+            }
+            container.scrollTop = container.scrollHeight;
+        }
+        function handleFileUpload(input) {
+            if (input.files && input.files[0]) {
+                const container = document.getElementById('chat-messages');
+                container.innerHTML += `<div class="chat-bubble chat-user">📄 [Imagen subida]</div>`;
+                const thinkingId = 'thinking-' + Date.now();
+                container.innerHTML += `<div id="${thinkingId}" class="chat-bubble chat-bot">Analizando... <span class="typing-dot"></span></div>`;
+                setTimeout(() => {
+                    document.getElementById(thinkingId).remove();
+                    container.innerHTML += `<div class="chat-bubble chat-bot">¡Entendido! Es un problema de cálculo. Aquí está el paso 1...</div>`;
+                    container.scrollTop = container.scrollHeight;
+                }, 2000);
+            }
+        }
+        function openPlannerDemo() { document.getElementById('modal-planner').classList.add('active'); }
+        function generateNeuroPlan() {
+            const subject = document.getElementById('planner-subject').value;
+            const topic = document.getElementById('planner-topic').value;
+            if(!subject || !topic) return alert("Por favor llena los campos.");
+            document.getElementById('planner-form').classList.add('hidden');
+            document.getElementById('planner-loading').classList.remove('hidden');
+            sendAnalytics('Neuro_Planner', `Subject: ${subject}, Topic: ${topic}`);
+            setTimeout(() => {
+                document.getElementById('planner-loading').classList.add('hidden');
+                document.getElementById('planner-result').classList.remove('hidden');
+                document.getElementById('planner-steps').innerHTML = `
+                    <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">1</div><div><strong>Lectura (15m):</strong> Escanea títulos de ${topic}.</div></div>
+                    <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">2</div><div><strong>Mapa Mental (20m):</strong> Conecta conceptos clave.</div></div>
+                    <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">3</div><div><strong>Feynman (10m):</strong> Explica el tema en voz alta.</div></div>`;
+            }, 2000);
+        }
         function openScannerDemo() { document.getElementById('modal-scanner').classList.add('active'); }
         function runScannerSim() {
             document.getElementById('scanner-upload-view').classList.add('hidden');
@@ -790,86 +920,13 @@
             setTimeout(() => {
                 document.getElementById('scanner-processing-view').classList.add('hidden');
                 document.getElementById('scanner-result-view').classList.remove('hidden');
-                sendAnalytics('Scanner', 'User uploaded sample image');
-            }, 2000);
+            }, 2500);
         }
 
-        // 2. CHAT DEMO
-        function openChatDemo() { document.getElementById('modal-chat').classList.add('active'); }
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const container = document.getElementById('chat-messages');
-            const msg = input.value.trim();
-            if(!msg) return;
-
-            // Add User Message
-            container.innerHTML += `<div class="chat-bubble chat-user">${msg}</div>`;
-            input.value = '';
-            container.scrollTop = container.scrollHeight;
-
-            // Analytics Save
-            sendAnalytics('Chat_STEMI', msg);
-
-            // Mock Bot Logic
-            setTimeout(() => {
-                let reply = "Entendido. Para ese tema te recomiendo usar el método Feynman: intenta explicármelo a mí como si fuera un niño de 5 años. ¿Por dónde empezarías?";
-                
-                if(msg.toLowerCase().includes('calculo') || msg.toLowerCase().includes('derivada') || msg.toLowerCase().includes('matematicas')) {
-                    reply = "Para matemáticas, leer no basta. Vamos a resolver 3 ejercicios prácticos ahora mismo. ¿Tienes tu cuaderno a la mano?";
-                } else if (msg.toLowerCase().includes('historia') || msg.toLowerCase().includes('biologia') || msg.toLowerCase().includes('teoria')) {
-                    reply = "Al ser un tema teórico, usaremos Active Recall. Te haré 3 preguntas clave sobre esto en 5 minutos. ¡Prepárate!";
-                }
-
-                container.innerHTML += `<div class="chat-bubble chat-bot">${reply}</div>`;
-                container.scrollTop = container.scrollHeight;
-            }, 1000);
-        }
-
-        // 3. PLANNER DEMO
-        function openPlannerDemo() { document.getElementById('modal-planner').classList.add('active'); }
-        function generateNeuroPlan() {
-            const subject = document.getElementById('planner-subject').value;
-            const topic = document.getElementById('planner-topic').value;
-            const type = document.getElementById('planner-type').value;
-
-            if(!subject || !topic) return alert("Por favor llena los campos.");
-
-            // Hide form, show loading
-            document.getElementById('planner-form').classList.add('hidden');
-            document.getElementById('planner-loading').classList.remove('hidden');
-
-            // Analytics Save
-            sendAnalytics('Neuro_Planner', `Subject: ${subject}, Topic: ${topic}, Type: ${type}`);
-
-            setTimeout(() => {
-                document.getElementById('planner-loading').classList.add('hidden');
-                document.getElementById('planner-result').classList.remove('hidden');
-                
-                const stepsContainer = document.getElementById('planner-steps');
-                let stepsHTML = '';
-
-                if (type === 'practica') {
-                    stepsHTML = `
-                        <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">1</div><div><strong>Repaso Rápido (10m):</strong> Lee solo las fórmulas clave de ${topic}.</div></div>
-                        <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">2</div><div><strong>Práctica Intercalada (25m):</strong> Resuelve 3 ejercicios de dificultad media sin mirar apuntes.</div></div>
-                        <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">3</div><div><strong>Corrección de Errores (15m):</strong> Analiza en qué fallaste.</div></div>
-                    `;
-                } else {
-                    stepsHTML = `
-                        <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">1</div><div><strong>Lectura Exploratoria (15m):</strong> Escanea títulos y subtítulos de ${topic}.</div></div>
-                        <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">2</div><div><strong>Mapa Mental (20m):</strong> Conecta los conceptos clave sin mirar el libro (Active Recall).</div></div>
-                        <div class="flex gap-3 items-start"><div class="bg-gray-700 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs flex-shrink-0">3</div><div><strong>Sesión Feynman (10m):</strong> Explica el tema en voz alta.</div></div>
-                    `;
-                }
-                stepsContainer.innerHTML = stepsHTML;
-            }, 2000);
-        }
-
-        // Script para enviar el formulario principal
+        // Form Submit
         const form = document.getElementById('registroForm');
         const submitBtn = document.getElementById('submitBtn');
         const statusMsg = document.getElementById('formStatus');
-
         if(form) {
             form.addEventListener('submit', e => {
                 e.preventDefault();
@@ -877,13 +934,11 @@
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<div class="loader"></div> Enviando...';
                 const formData = new FormData(form);
-
                 fetch('/', {
                     method: 'POST',
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                     body: new URLSearchParams(formData).toString()
-                })
-                .then(() => {
+                }).then(() => {
                     submitBtn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> ¡Enviado!';
                     submitBtn.classList.remove('bg-brand-600');
                     submitBtn.classList.add('bg-green-600', 'border-green-500');
@@ -892,8 +947,7 @@
                     statusMsg.className = "text-sm mt-3 text-green-400 font-bold";
                     form.reset();
                     lucide.createIcons();
-                })
-                .catch(error => {
+                }).catch(error => {
                     console.error('Error!', error);
                     statusMsg.textContent = "Hubo un error. Inténtalo de nuevo.";
                     submitBtn.disabled = false;
